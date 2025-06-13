@@ -3,3 +3,10 @@
 
 # Keep .env.example tracked
 !.env.example
+
+# Node modules
+node_modules/
+
+# Package lock file
+package-lock.json
+
