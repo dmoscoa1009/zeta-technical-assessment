@@ -10,14 +10,25 @@ import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cart-store";
 import Image from "next/image";
 import { ShoppingCart, Trash } from "lucide-react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function CartSheet() {
   const cart = useCartStore((state) => state.items);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
+
+  const handlePay = () => {
+    setOpen(false);
+    setTimeout(() => {
+      router.push("/payment");
+    }, 200);
+  };
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className="relative">
           <ShoppingCart className="w-7 h-7" />
@@ -80,7 +91,10 @@ export default function CartSheet() {
             <span>Total</span>
             <span>${total.toLocaleString()}</span>
           </div>
-          <Button className="w-full mt-2 bg-red-600 hover:bg-red-700 text-white font-bold text-lg">
+          <Button
+            onClick={handlePay}
+            className="w-full mt-2 bg-red-600 hover:bg-red-700 text-white font-bold text-lg"
+          >
             Pay
           </Button>
         </div>
