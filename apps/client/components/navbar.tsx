@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ShoppingCart, Menu, LogOut, LayoutDashboard } from "lucide-react";
 import { useUserStore } from "@/stores/user-store";
+import { useCartStore } from "@/stores/cart-store";
 import {
   Popover,
   PopoverContent,
@@ -13,8 +14,8 @@ import { useState } from "react";
 
 export default function Navbar() {
   const user = useUserStore((state) => state.user);
+  const cart = useCartStore((state) => state.items);
   const clearUser = useUserStore((state) => state.clearUser);
-  const cart = [];
   const [open, setOpen] = useState(false);
 
   const handleSignOut = () => {
@@ -37,7 +38,7 @@ export default function Navbar() {
                 <ShoppingCart className="text-white w-7 h-7" />
                 {cart.length > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-600 text-xs rounded-full px-1.5 py-0.5 font-bold">
-                    {cart.length}
+                    {cart.reduce((total, item) => total + item.quantity, 0)}
                   </span>
                 )}
               </Button>
@@ -80,14 +81,14 @@ export default function Navbar() {
         ) : (
           <>
             <Link href="/register">
-              <button className="px-4 py-2 rounded-lg bg-zinc-900 text-white border border-zinc-700 hover:bg-zinc-800 transition">
+              <Button className="px-4 py-2 rounded-lg bg-zinc-900 text-white border border-zinc-700 hover:bg-zinc-800 transition">
                 Register
-              </button>
+              </Button>
             </Link>
             <Link href="/login">
-              <button className="px-4 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition">
+              <Button className="px-4 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition">
                 Sign In
-              </button>
+              </Button>
             </Link>
           </>
         )}
