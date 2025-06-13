@@ -27,6 +27,7 @@ export default function LoginPage() {
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const setUser = useUserStore((state) => state.setUser);
+  const setAuthCookie = useUserStore((state) => state.setAuthCookie);
   const router = useRouter();
 
   async function handleSubmit(e: React.FormEvent) {
@@ -50,6 +51,7 @@ export default function LoginPage() {
     try {
       const data = await login({ email, password });
       setUser(data.user, data.token);
+      setAuthCookie(data.token);
       router.push("/");
     } catch (err: any) {
       setError(err?.response?.data?.message || "Login failed");

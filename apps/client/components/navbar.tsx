@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 export default function Navbar() {
   const user = useUserStore((state) => state.user);
   const clearUser = useUserStore((state) => state.clearUser);
+  const clearAuthCookie = useUserStore((state) => state.clearAuthCookie);
   const clearCart = useCartStore((state) => state.clearCart);
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -24,6 +25,7 @@ export default function Navbar() {
   const handleSignOut = () => {
     clearUser();
     clearCart();
+    clearAuthCookie();
     setOpen(false);
     router.push("/");
   };
