@@ -61,11 +61,22 @@ npx prisma generate
 npx prisma migrate dev --name init
 ```
 
+### SOLO SI ES NECESARIO HACER EL SEED MANUAL, ESTE DEBIO EJECUTARSE CON LA MIGRACION...
+
+Running seed command `ts-node prisma/seed.ts` ...
+🌱 Seed completed.
+
+🌱 The seed command has been executed.
+
+#### OPCIONAL
+
 ### 5. Siembra la base de datos con datos de ejemplo
 
 ```bash
 npx prisma db seed
 ```
+
+#### OPCIONAL
 
 Esto creará un usuario admin (`admin@arki.tech` / `admin123`), categorías y productos de ejemplo.
 
