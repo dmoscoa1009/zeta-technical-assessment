@@ -25,16 +25,37 @@ export const fetchProducts = async (
   if (search) params.append("search", search);
   if (category) params.append("category", category);
 
-  const response = await api.get<PaginatedResponse>(
-    `/products/get-all-products?${params.toString()}`
-  );
-  return response.data;
+  try {
+    const response = await api.get<PaginatedResponse>(
+      `/products/get-all-products?${params.toString()}`
+    );
+    return response.data;
+  } catch (err: any) {
+    throw new Error(err?.response?.data?.message || "Error fetching products");
+  }
 };
 
-export async function fetchProductById(productId: string) {
-  const response = await api.get(`/products/get-product-by-id/${productId}`);
-  return response.data;
-}
+export const fetchProductById = async (productId: string) => {
+  try {
+    const response = await api.get(`/products/get-product-by-id/${productId}`);
+    return response.data;
+  } catch (err: any) {
+    throw new Error(
+      err?.response?.data?.message || "Error fetching product by id"
+    );
+  }
+};
+
+export const fetchCategories = async () => {
+  try {
+    const response = await api.get("/categories/get-all-categories");
+    return response.data;
+  } catch (err: any) {
+    throw new Error(
+      err?.response?.data?.message || "Error fetching categories"
+    );
+  }
+};
 
 export async function createProduct(formData: any) {
   const response = await api.post("/products/create-product", formData, {

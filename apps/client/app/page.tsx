@@ -1,6 +1,8 @@
 import { fetchProducts } from "@/services/products";
 import { fetchCategories } from "@/services/categories";
 import ProductGridWithFilters from "@/components/product-grid-with-filters";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface PageProps {
   searchParams: {
@@ -13,7 +15,7 @@ interface PageProps {
 
 export default async function HomePage({ searchParams }: PageProps) {
   const page = Number(searchParams.page) || 1;
-  const limit = Number(searchParams.limit) || 12;
+  const limit = Number(searchParams.limit) || 10;
   const search = searchParams.search || "";
   const category = searchParams.category || "";
 
