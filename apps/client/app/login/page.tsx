@@ -78,8 +78,6 @@ export default function LoginPage() {
                   placeholder="m@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  required
-                  autoComplete="off"
                 />
                 {emailError && (
                   <div className="text-red-500 text-xs mt-1">{emailError}</div>
@@ -93,8 +91,6 @@ export default function LoginPage() {
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    required
-                    autoComplete="off"
                     className="pr-10"
                   />
                   <button
