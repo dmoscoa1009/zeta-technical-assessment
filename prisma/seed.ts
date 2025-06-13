@@ -52,21 +52,21 @@ async function main() {
         description:
           "Mini smart speaker with circular design and touch control.",
         price: 129.0,
-        imageUrl: "/images/products/arki-one.jpg",
+        imageUrl: "/images/products/arki-one.png",
         categoryId: audio.id,
       },
       {
         name: "ARKI Light",
         description: "Desk lamp with frosted glass dome and aluminum base.",
         price: 99.0,
-        imageUrl: "/images/products/arki-light.jpg",
+        imageUrl: "/images/products/arki-light.png",
         categoryId: lighting.id,
       },
       {
         name: "ARKI Dock",
         description: "Aluminum USB-C dock with 6 ports and SD card reader.",
         price: 89.0,
-        imageUrl: "/images/products/arki-dock.jpg",
+        imageUrl: "/images/products/arki-dock.png",
         categoryId: accessories.id,
       },
       {
@@ -74,7 +74,7 @@ async function main() {
         description:
           "Ultra-minimalist e-ink writing tablet with magnetic stylus.",
         price: 349.0,
-        imageUrl: "/images/products/arki-note.jpg",
+        imageUrl: "/images/products/arki-note.png",
         categoryId: accessories.id,
       },
     ],
