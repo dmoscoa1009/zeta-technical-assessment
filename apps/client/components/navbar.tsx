@@ -6,7 +6,6 @@ import { useUserStore } from "@/stores/user-store";
 
 export default function Navbar() {
   const user = useUserStore((state) => state.user);
-  console.log("🚀 ~ Navbar ~ user:", user);
 
   return (
     <nav className="w-full flex items-center justify-between px-12 py-8">
