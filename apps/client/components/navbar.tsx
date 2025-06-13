@@ -11,16 +11,21 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { useCartStore } from "@/stores/cart-store";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const user = useUserStore((state) => state.user);
   const clearUser = useUserStore((state) => state.clearUser);
+  const clearCart = useCartStore((state) => state.clearCart);
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const handleSignOut = () => {
     clearUser();
+    clearCart();
     setOpen(false);
-    window.location.href = "/";
+    router.push("/");
   };
 
   return (
@@ -46,7 +51,7 @@ export default function Navbar() {
                 </div>
                 <div className="flex flex-col gap-1 p-2">
                   {user.role === "ADMIN" && (
-                    <Link href="/dashboard">
+                    <Link href="/dashboard/products">
                       <Button
                         variant="ghost"
                         className="w-full justify-start gap-2"
