@@ -12,10 +12,21 @@ import {
 import ProductDialog from "@/components/create-product-dialog";
 import { fetchCategories } from "@/services/categories";
 import DeleteProductDialog from "@/components/delete-product-dialog";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-export default async function AdminProductsPage() {
-  const products = await fetchProducts();
+interface PageProps {
+  searchParams: {
+    page?: string;
+    limit?: string;
+  };
+}
+
+export default async function AdminProductsPage({ searchParams }: PageProps) {
+  const page = Number(searchParams.page) || 1;
+  const limit = Number(searchParams.limit) || 10;
+
+  const { products, pagination } = await fetchProducts(page, limit);
   const categories = await fetchCategories();
 
   return (
@@ -68,11 +79,42 @@ export default async function AdminProductsPage() {
             ))}
           </TableBody>
         </Table>
-      </div>
-      <div className="flex justify-end mt-4">
-        <Link href="/">
-          <Button variant="link">← Back to Home</Button>
-        </Link>
+
+        {/* Pagination */}
+        <div className="flex items-center justify-between mt-4">
+          <div className="text-sm text-zinc-400">
+            Showing {products.length} of {pagination.total} products
+          </div>
+          <div className="flex items-center gap-2">
+            <Link
+              href={`?page=${pagination.currentPage - 1}&limit=${
+                pagination.limit
+              }`}
+              aria-disabled={!pagination.hasPrevPage}
+              tabIndex={pagination.hasPrevPage ? 0 : -1}
+              className={`inline-flex items-center justify-center rounded-md border border-input bg-background p-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 ${
+                !pagination.hasPrevPage ? "pointer-events-none opacity-50" : ""
+              }`}
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </Link>
+            <span className="text-sm">
+              Page {pagination.currentPage} of {pagination.totalPages}
+            </span>
+            <Link
+              href={`?page=${pagination.currentPage + 1}&limit=${
+                pagination.limit
+              }`}
+              aria-disabled={!pagination.hasNextPage}
+              tabIndex={pagination.hasNextPage ? 0 : -1}
+              className={`inline-flex items-center justify-center rounded-md border border-input bg-background p-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50 ${
+                !pagination.hasNextPage ? "pointer-events-none opacity-50" : ""
+              }`}
+            >
+              <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
