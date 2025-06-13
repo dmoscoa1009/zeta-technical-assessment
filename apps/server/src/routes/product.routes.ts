@@ -38,8 +38,14 @@ router.put(
   "/update-product/:id",
   authMiddleware,
   adminMiddleware,
+  upload.single("image"),
   updateProduct
 );
-router.delete("/:id", authMiddleware, adminMiddleware, deleteProduct);
+router.delete(
+  "/delete-product/:id",
+  authMiddleware,
+  adminMiddleware,
+  deleteProduct
+);
 
 export default router;

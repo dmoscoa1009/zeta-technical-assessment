@@ -9,7 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { Product, Category } from "@/types/product";
+import type { Product } from "@/types/product";
+import { Category } from "@/types/category";
 
 export default function ProductGridWithFilters({
   products,

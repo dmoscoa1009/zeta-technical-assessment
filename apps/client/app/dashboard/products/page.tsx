@@ -1,7 +1,6 @@
 import { fetchProducts } from "@/services/products";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Pencil, Trash2 } from "lucide-react";
 import {
   Table,
   TableHeader,
@@ -10,8 +9,10 @@ import {
   TableHead,
   TableCell,
 } from "@/components/ui/table";
-import CreateProductDialog from "@/components/create-product-dialog";
+import ProductDialog from "@/components/create-product-dialog";
 import { fetchCategories } from "@/services/categories";
+import DeleteProductDialog from "@/components/delete-product-dialog";
+import Link from "next/link";
 
 export default async function AdminProductsPage() {
   const products = await fetchProducts();
@@ -21,7 +22,7 @@ export default async function AdminProductsPage() {
     <div className="max-w-5xl mx-auto py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Products</h1>
-        <CreateProductDialog categories={categories} />
+        <ProductDialog categories={categories} />
       </div>
       <div className="bg-zinc-900 rounded-lg shadow p-4">
         <Table>
@@ -51,17 +52,27 @@ export default async function AdminProductsPage() {
                 <TableCell>${product.price.toLocaleString()}</TableCell>
                 <TableCell>{product.category?.name}</TableCell>
                 <TableCell className="text-right">
-                  <Button variant="outline" size="icon" className="mr-2">
-                    <Pencil className="w-4 h-4" />
-                  </Button>
-                  <Button variant="destructive" size="icon">
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
+                  <div className="flex justify-end gap-2">
+                    <ProductDialog
+                      categories={categories}
+                      product={product}
+                      editMode
+                    />
+                    <DeleteProductDialog
+                      productId={product.id}
+                      productName={product.name}
+                    />
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
+      </div>
+      <div className="flex justify-end mt-4">
+        <Link href="/">
+          <Button variant="link">← Back to Home</Button>
+        </Link>
       </div>
     </div>
   );

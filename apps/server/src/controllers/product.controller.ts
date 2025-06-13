@@ -68,17 +68,33 @@ export const createProduct: RequestHandler = async (req: any, res, next) => {
   }
 };
 
-export const updateProduct: RequestHandler = async (req, res, next) => {
+export const updateProduct: RequestHandler = async (req: any, res, next) => {
   try {
     const { id } = req.params;
-    const { name, description, price, imageUrl, categoryId } = req.body;
+    const { name, description, price, categoryId } = req.body;
+
+    // Get the current product to keep the existing image if no new one is uploaded
+    const currentProduct = await prisma.product.findUnique({
+      where: { id },
+    });
+
+    if (!currentProduct) {
+      res.status(404).json({ message: "Product not found" });
+      return;
+    }
+
+    // If a new image is uploaded, use it; otherwise, keep the existing one
+    let imageUrl = currentProduct.imageUrl;
+    if (req.file) {
+      imageUrl = `/images/products/${req.file.filename}`;
+    }
 
     const product = await prisma.product.update({
       where: { id },
       data: {
         name,
         description,
-        price,
+        price: Number(price),
         imageUrl,
         categoryId,
       },

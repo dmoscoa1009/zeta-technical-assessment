@@ -16,3 +16,19 @@ export async function createProduct(formData: any) {
   });
   return response.data;
 }
+
+export async function updateProduct(productId: string, formData: FormData) {
+  const response = await api.put(
+    `/products/update-product/${productId}`,
+    formData,
+    {
+      headers: { "Content-Type": "multipart/form-data" },
+    }
+  );
+  return response.data;
+}
+
+export async function deleteProduct(id: string) {
+  const response = await api.delete(`/products/delete-product/${id}`);
+  return response.data;
+}
