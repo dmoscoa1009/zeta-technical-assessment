@@ -1,0 +1,5 @@
+# Environment variables
+.env
+
+# Keep .env.example tracked
+!.env.example
