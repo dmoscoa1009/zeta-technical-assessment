@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, Menu, LogOut, LayoutDashboard } from "lucide-react";
+import { Menu, LogOut, LayoutDashboard } from "lucide-react";
 import { useUserStore } from "@/stores/user-store";
-import { useCartStore } from "@/stores/cart-store";
+import CartSheet from "@/components/cart-sheet";
 import {
   Popover,
   PopoverContent,
@@ -14,7 +14,6 @@ import { useState } from "react";
 
 export default function Navbar() {
   const user = useUserStore((state) => state.user);
-  const cart = useCartStore((state) => state.items);
   const clearUser = useUserStore((state) => state.clearUser);
   const [open, setOpen] = useState(false);
 
@@ -32,17 +31,8 @@ export default function Navbar() {
       <div className="flex items-center gap-4">
         {user ? (
           <>
-            {/* Cart Icon with badge */}
-            <div className="relative">
-              <Button variant="ghost" size="icon" className="text-white">
-                <ShoppingCart className="text-white w-7 h-7" />
-                {cart.length > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-600 text-xs rounded-full px-1.5 py-0.5 font-bold">
-                    {cart.reduce((total, item) => total + item.quantity, 0)}
-                  </span>
-                )}
-              </Button>
-            </div>
+            {/* CartSheet replaces cart icon */}
+            <CartSheet />
             {/* Menu Icon with Popover */}
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
@@ -81,14 +71,14 @@ export default function Navbar() {
         ) : (
           <>
             <Link href="/register">
-              <Button className="px-4 py-2 rounded-lg bg-zinc-900 text-white border border-zinc-700 hover:bg-zinc-800 transition">
+              <button className="px-4 py-2 rounded-lg bg-zinc-900 text-white border border-zinc-700 hover:bg-zinc-800 transition">
                 Register
-              </Button>
+              </button>
             </Link>
             <Link href="/login">
-              <Button className="px-4 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition">
+              <button className="px-4 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition">
                 Sign In
-              </Button>
+              </button>
             </Link>
           </>
         )}
