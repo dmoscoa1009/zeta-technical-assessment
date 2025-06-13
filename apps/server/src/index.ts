@@ -3,9 +3,10 @@ import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
 import routes from "./routes";
+import { resolve } from "path";
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: resolve(__dirname, "../../.env") });
 
 const app = express();
 

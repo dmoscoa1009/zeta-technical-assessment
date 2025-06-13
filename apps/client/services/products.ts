@@ -9,3 +9,10 @@ export async function fetchProductById(productId: string) {
   const response = await api.get(`/products/get-product-by-id/${productId}`);
   return response.data;
 }
+
+export async function createProduct(formData: any) {
+  const response = await api.post("/products/create-product", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return response.data;
+}

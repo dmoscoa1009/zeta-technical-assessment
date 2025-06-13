@@ -43,14 +43,21 @@ export const getProductById: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const createProduct: RequestHandler = async (req, res, next) => {
+export const createProduct: RequestHandler = async (req: any, res, next) => {
   try {
-    const { name, description, price, imageUrl, categoryId } = req.body;
+    const { name, description, price, categoryId } = req.body;
+    let imageUrl = req.body.imageUrl;
+
+    if (req.file) {
+      // Save the relative path for the client to use
+      imageUrl = `/images/products/${req.file.filename}`;
+    }
+
     const product = await prisma.product.create({
       data: {
         name,
         description,
-        price,
+        price: Number(price),
         imageUrl,
         categoryId,
       },
